@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clean-blog.min.css') }}">
     <title>Hello Flask</title>
 </head>
 
 <body>
 
-    <nav>
+    <nav class="navbar">
         <ul>
             <!-- In order for navigation links to work, we use the Jinja templating method of url_for in order to call the appropriate functions -->
             <li><a href="{{ url_for('index') }}">Home</a></li>
