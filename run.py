@@ -24,6 +24,19 @@ def about():
     return render_template("about.html", page_title="About", company=data)
 
 
+# link about page, member by routing
+@app.route("/about/<member_name>")
+# create member_name view
+def about_member(member_name):
+    member = {}
+    with open("data/company.json", "r") as json_data:
+        data = json.load(json_data)
+        for obj in data:
+            if obj["url"] == member_name:
+                member = obj
+    return render_template("member.html", member=member)
+
+
 # link contact page by routing
 @app.route("/contact")
 def contact():
@@ -33,7 +46,7 @@ def contact():
 # link careers page by routing
 @app.route("/careers")
 def careers():
-    return render_template("careers.html", page_title="Careers" )
+    return render_template("careers.html", page_title="Careers")
 
 
 if __name__ == "__main__":
