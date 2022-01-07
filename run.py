@@ -2,13 +2,22 @@ import os
 import json
 
 # import the Flask class
-# Request library is going to handle things like finding out what method was
+# Request library is going to handle things like finding out what method was,
 # used, and it contains the form object when it's posted
-from flask import Flask, render_template, request
+# Flash function in Flask displays a non-permanent message to the user,
+# something that only stays on screen until the page is refreshed
+# Flask cryptographically signs all of the messages for security purposes,
+# so I need to create a secret key
+from flask import Flask, render_template, request, flash
+
+# Import env library only if the system can find an env.py file
+if os.path.exists("env.py"):
+    import env
 
 
 # Create an instance of Flask class
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
 # use the route decorator to tell Flask what URL should trigger the function
@@ -44,9 +53,8 @@ def about_member(member_name):
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        print("Hello! Is anybody there?")
-        print(request.form.get("name"))
-        print(request.form["email"])
+        flash("Thanks {}, we received your message!".format(
+            request.form.get("name")))
     return render_template("contact.html", page_title="Contact")
 
 
